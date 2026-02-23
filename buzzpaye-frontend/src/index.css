@@ -1,0 +1,10 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+  padding-top: 64px;
+  background: rgb(30, 30, 30) /* adjust if navbar height changes */
+}

@@ -1,0 +1,133 @@
+/* /* .glow-hover {
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(252, 115, 65, 0.2);
+}
+
+.glow-hover:hover {
+  box-shadow: 0 0 5px 5px rgba(215, 109, 71, 0.7);
+  filter: brightness(1.1);
+} */
+/* 
+
+:root {
+  --primary: rgb(232, 126, 51);
+  --secondary: #000000;
+  --lightRed: rgb(250, 122, 35);
+  --grayCustom: rgb(30, 30, 30);
+}
+
+.glow-hover {
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(232, 126, 51, 0.3);
+}
+
+.glow-hover:hover {
+  box-shadow: 0 0 15px 5px rgba(250, 122, 35, 0.7);
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+.glow-border {
+  border: 2px solid rgba(232, 126, 51, 0.6);
+  box-shadow: 0 0 15px rgba(232, 126, 51, 0.3);
+  transition: all 0.4s ease-in-out;
+}
+
+.glow-border:hover {
+  box-shadow: 0 0 25px rgba(250, 122, 35, 0.7);
+  border-color: var(--lightRed);
+}
+
+
+.glow-card {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1.5px solid var(--primary);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 0 12px rgba(232, 126, 51, 0.25);
+  transition: all 0.3s ease;
+}
+
+.glow-card:hover {
+  border-color: var(--lightRed);
+  box-shadow: 0 0 25px rgba(250, 122, 35, 0.7);
+  transform: translateY(-5px);
+}
+ */
+
+
+
+ :root {
+  --primary: rgb(232, 126, 51);
+  --secondary: #000000;
+  --lightRed: rgb(250, 122, 35);
+  --grayCustom: rgb(30, 30, 30);
+}
+
+/* Button glow hover */
+.glow-hover {
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(232, 126, 51, 0.3);
+}
+
+.glow-hover:hover {
+  box-shadow: 0 0 15px 5px rgba(250, 122, 35, 0.7);
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+/* Image glow border */
+/* .glow-border {
+  border: 2px solid rgba(232, 126, 51, 0.6);
+  box-shadow: 0 0 15px rgba(232, 126, 51, 0.3);
+  transition: all 0.4s ease-in-out;
+}
+
+.glow-border:hover {
+  box-shadow: 0 0 25px rgba(250, 122, 35, 0.7);
+  border-color: var(--lightRed);
+} */
+
+.glow-border {
+  border: none;
+  border-radius: 18px; /* Slightly rounded corners */
+  transition: all 0.4s ease-in-out;
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.glow-border:hover {
+  transform: translateY(-12px) scale(1.03);
+  box-shadow: 0 12px 24px rgba(250, 122, 35, 0.35);
+}
+
+.glow-signBorder{
+  border: 2px solid rgba(232, 126, 51, 0.6);
+  box-shadow: 0 0 15px rgba(232, 126, 51, 0.3);
+  transition: all 0.4s ease-in-out;
+}
+
+
+/* Card glow effect with dual-tone gradient */
+.glow-card {
+  background: linear-gradient(160deg, rgba(0, 0, 0, 0.85), rgba(232, 126, 51, 0.1));
+  border: 1.5px solid rgba(232, 126, 51, 0.6);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 0 15px rgba(232, 126, 51, 0.15);
+  transition: all 0.3s ease;
+}
+
+.glow-card:hover {
+  background: linear-gradient(160deg, rgba(30, 30, 30, 0.9), rgba(250, 122, 35, 0.15));
+  border-color: var(--lightRed);
+  box-shadow: 0 0 25px rgba(250, 122, 35, 0.6);
+  transform: translateY(-5px);
+}
+
+
+.glow-text {
+  text-shadow:
+    0 0 6px rgba(232, 126, 51, 0.8),
+    0 0 12px rgba(250, 122, 35, 0.5);
+}
