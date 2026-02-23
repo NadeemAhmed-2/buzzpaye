@@ -20,12 +20,21 @@ const app = express();
 // ---------------------
 app.use(express.json());
 
-app.use(
-  cors({
-    origin: "http://localhost:5173", // ✅ your frontend
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: "http://localhost:5173", // ✅ your frontend
+//     credentials: true,
+//   })
+// );
+
+
+cors({
+  origin: [
+    "http://localhost:5173",
+    "https://buzzpaye-2.vercel.app"
+  ],
+  credentials: true
+})
 
 // ---------------------
 // Uploads Folder Setup

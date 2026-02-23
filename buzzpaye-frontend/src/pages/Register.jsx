@@ -234,6 +234,7 @@ export default function Register() {
     password: "",
     role: "",
   });
+const [error, setError] = useState("");
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
