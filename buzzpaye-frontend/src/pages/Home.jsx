@@ -755,7 +755,6 @@ import {
   UserSquare2,
 } from "lucide-react";
 import HomeImage from "../assets/Homepage.png";
-import buzzImage from "../assets/buzzImage.jpg";
 import "../styles/glow.css";
 import TestimonialsSection from "../components/TestimonialsSection";
 
