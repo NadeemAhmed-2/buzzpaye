@@ -226,7 +226,7 @@ import { useAuth } from "../context/AuthContext";
 import api from "../utils/api";
 
 export default function Register() {
-  const { register } = useAuth();
+  const { setUser } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
@@ -260,26 +260,29 @@ const [error, setError] = useState("");
 
   // };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await api.post("/auth/register", form);
-      const { _id, name, email, role, token } = res.data;
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const res = await api.post("/auth/register", form);
+    const { _id, name, email, role, token } = res.data;
 
-      // ✅ Save user and token in localStorage
-      const user = { _id, name, email, role, token };
-      localStorage.setItem("user", JSON.stringify(user));
-      localStorage.setItem("token", token);
-      localStorage.setItem("userRole", role);
-      localStorage.setItem("userName", name);
+    const user = { _id, name, email, role, token };
 
-      // ✅ Redirect based on role
-      if (role === "brand") navigate("/");
-      else navigate("/");
-    } catch (err) {
-      setError(err.response?.data?.message || "Registration failed");
-    }
-  };
+    // Save in localStorage
+    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("token", token);
+    localStorage.setItem("userRole", role);
+    localStorage.setItem("userName", name);
+
+    // 🔥 IMPORTANT: Update AuthContext
+    setUser(user);
+
+    navigate("/", { replace: true });
+
+  } catch (err) {
+    setError(err.response?.data?.message || "Registration failed");
+  }
+};
 
   return (
     <div className="flex justify-center items-center h-[80vh] bg-grayCustom px-4 m-10">
