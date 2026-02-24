@@ -11,16 +11,31 @@ MONGO_URI = os.environ.get("MONGO_URI")
 client = MongoClient(MONGO_URI)
 db = client["buzzpaye"]
 
+@app.route("/test-db")
+def test_db():
+    try:
+        campaigns = list(db.campaigns.find())
+        return jsonify({
+            "campaign_count": len(campaigns),
+            "first_campaign": str(campaigns[0]["_id"]) if campaigns else None
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 @app.route("/recommend/<campaign_id>", methods=["GET"])
 def recommend_influencers(campaign_id):
     try:
         campaign = db.campaigns.find_one({"_id": ObjectId(campaign_id)})
-    except:
-        return jsonify({"error": "Invalid campaign ID"}), 400
+        print("Campaign ID received:", campaign_id)
+        print("Campaign found:", campaign)
 
-    if not campaign:
-        return jsonify({"error": "Campaign not found"}), 404
+        if not campaign:
+            return jsonify({"error": "Campaign not found"}), 404
 
+        # your remaining logic here...
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
     campaign_category = str(campaign.get("category", "")).lower()
     campaign_location = str(campaign.get("location", "")).lower()
 
