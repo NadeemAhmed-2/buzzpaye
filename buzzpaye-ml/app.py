@@ -3,11 +3,12 @@ from pymongo import MongoClient
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from bson import ObjectId
-
+import os
 app = Flask(__name__)
 
 # MongoDB connection
-client = MongoClient("mongodb://localhost:27017/")
+MONGO_URI = os.environ.get("MONGO_URI")
+client = MongoClient(MONGO_URI)
 db = client["buzzpaye"]
 
 @app.route("/recommend/<campaign_id>", methods=["GET"])
@@ -116,6 +117,5 @@ def recommend_influencers(campaign_id):
 
     return jsonify(results[:10])
 
-
 if __name__ == "__main__":
-    app.run(port=5001, debug=True)
+    app.run(host="0.0.0.0", port=10000)
