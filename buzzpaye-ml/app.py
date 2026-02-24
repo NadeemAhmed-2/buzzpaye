@@ -21,6 +21,11 @@ def test_db():
         })
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+@app.route("/")
+def home():
+    return jsonify({"message": "BuzzPaye ML Service Running 🚀"})
+
 @app.route("/recommend/<campaign_id>", methods=["GET"])
 def recommend_influencers(campaign_id):
     try:
