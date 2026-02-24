@@ -127,9 +127,6 @@ app.use(cors({
   credentials: true
 }));
 
-// Handle preflight requests
-app.options("*", cors());
-
 /* =====================================================
    MIDDLEWARE
 ===================================================== */
@@ -181,6 +178,11 @@ app.get("/", (req, res) => {
   res.send("🚀 BuzzPaye Backend Running Successfully!");
 });
 
+
+/* ✅ 404 HANDLER */
+app.use((req, res) => {
+  res.status(404).json({ message: "Route not found" });
+});
 /* =====================================================
    SERVER + SOCKET.IO
 ===================================================== */
