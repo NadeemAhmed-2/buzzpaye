@@ -19,7 +19,9 @@ export const ChatProvider = ({ children }) => {
   // 🔌 Connect socket when user logs in
   useEffect(() => {
   if (user) {
-    const SOCKET_URL = import.meta.env.VITE_API_URL;
+    const SOCKET_URL =
+      import.meta.env.VITE_SOCKET_URL ||
+      "http://localhost:5000";
 
     const newSocket = io(SOCKET_URL, {
       query: { userId: user._id },
@@ -34,7 +36,6 @@ export const ChatProvider = ({ children }) => {
     });
 
     newSocket.on("receive_message", (data) => {
-      console.log("📩 Message received:", data);
       setMessages((prev) => [...prev, data]);
     });
 

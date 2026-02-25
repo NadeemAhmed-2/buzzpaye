@@ -1461,9 +1461,12 @@ const BrandProfile = () => {
         const token = localStorage.getItem("token"); // get JWT token
         if (!token) return;
 
-        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/brand/me`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const { data } = await axios.get(
+          `${import.meta.env.VITE_API_URL}/api/brand/me`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
 
         setProfile(data);
       } catch (err) {
@@ -1505,10 +1508,16 @@ const BrandProfile = () => {
       const token = localStorage.getItem("token");
       if (!token) return alert("You must be logged in!");
 
+      // const { data } = await axios.post(
+      //   "http://localhost:5000/api/brand",
+      //   profile,
+      //   { headers: { Authorization: `Bearer ${token}` } }
+      // );
+
       const { data } = await axios.post(
-        "http://localhost:5000/api/brand",
+        `${import.meta.env.VITE_API_URL}/api/brand`,
         profile,
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` } },
       );
 
       setProfile(data);
@@ -1519,25 +1528,28 @@ const BrandProfile = () => {
   };
 
   const handleEdit = () => setIsEditing(true);
-  
-
 
   const handleRemoveImage = async (id) => {
-  try {
-    const token = localStorage.getItem("token");
-    if (!token) return alert("You must be logged in!");
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return alert("You must be logged in!");
 
-    const { data } = await axios.delete(
-      `http://localhost:5000/api/brand/image/${id}`, // send ID instead of index
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
+      // const { data } = await axios.delete(
+      //   `http://localhost:5000/api/brand/image/${id}`, // send ID instead of index
+      //   { headers: { Authorization: `Bearer ${token}` } }
+      // );
 
-    setProfile(data);
-  } catch (err) {
-    console.error("Failed to delete image:", err);
-  }
-};
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/brand`,
+        profile,
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
 
+      setProfile(data);
+    } catch (err) {
+      console.error("Failed to delete image:", err);
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-grayCustom text-gray-400 px-6 py-10">
