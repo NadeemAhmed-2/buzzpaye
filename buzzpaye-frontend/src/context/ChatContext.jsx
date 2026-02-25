@@ -18,34 +18,35 @@ export const ChatProvider = ({ children }) => {
 
   // 🔌 Connect socket when user logs in
   useEffect(() => {
-    if (user) {
-      const newSocket = io(import.meta.env.VITE_SOCKET_URL || "http://localhost:5000", {
-        query: { userId: user._id },
-        transports: ["websocket"],
-      });
+  if (user) {
+    const SOCKET_URL = import.meta.env.VITE_API_URL;
 
-      setSocket(newSocket);
+    const newSocket = io(SOCKET_URL, {
+      query: { userId: user._id },
+      transports: ["websocket"],
+      withCredentials: true,
+    });
 
-      // ✅ When connected
-      newSocket.on("connect", () => {
-        console.log("✅ Socket connected:", newSocket.id);
-      });
+    setSocket(newSocket);
 
-      // ✅ Receive message
-      newSocket.on("receive_message", (data) => {
-        console.log("📩 Message received:", data);
-        setMessages((prev) => [...prev, data]);
-      });
+    newSocket.on("connect", () => {
+      console.log("✅ Socket connected:", newSocket.id);
+    });
 
-      // ✅ Track online users (optional feature)
-      newSocket.on("online_users", (users) => setOnlineUsers(users));
+    newSocket.on("receive_message", (data) => {
+      console.log("📩 Message received:", data);
+      setMessages((prev) => [...prev, data]);
+    });
 
-      // 🔴 Clean up on logout/unmount
-      return () => {
-        newSocket.disconnect();
-      };
-    }
-  }, [user]);
+    newSocket.on("online_users", (users) => {
+      setOnlineUsers(users);
+    });
+
+    return () => {
+      newSocket.disconnect();
+    };
+  }
+}, [user]);
 
   // ✉️ Send a message
   const sendMessage = (msgData) => {

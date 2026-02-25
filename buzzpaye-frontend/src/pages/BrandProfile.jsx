@@ -1461,7 +1461,7 @@ const BrandProfile = () => {
         const token = localStorage.getItem("token"); // get JWT token
         if (!token) return;
 
-        const { data } = await axios.get("http://localhost:5000/api/brand/me", {
+        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/brand/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
