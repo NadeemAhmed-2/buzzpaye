@@ -5,9 +5,13 @@ exports.getRecommendations = async (req, res) => {
   try {
     const campaignId = req.params.id;
 
-    // Call ML API
+    // // Call ML API
+    // const mlRes = await axios.get(
+    //   `http://127.0.0.1:5001/recommend/${campaignId}`
+    // );
+
     const mlRes = await axios.get(
-      `http://127.0.0.1:5001/recommend/${campaignId}`
+      `${process.env.ML_SERVICE_URL}/recommend/${campaignId}`,
     );
 
     const results = mlRes.data;
@@ -19,9 +23,7 @@ exports.getRecommendations = async (req, res) => {
     }).populate("user", "name email");
 
     const finalResults = influencers.map((inf) => {
-      const match = results.find(
-        (r) => r.influencerId === inf._id.toString()
-      );
+      const match = results.find((r) => r.influencerId === inf._id.toString());
 
       return {
         ...inf.toObject(),
