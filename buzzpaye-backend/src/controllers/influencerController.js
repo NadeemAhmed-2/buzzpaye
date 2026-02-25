@@ -38,8 +38,6 @@
 // //   }
 // // };
 
-
-
 // // Upsert profile
 // // exports.upsertProfile = async (req, res) => {
 // //   try {
@@ -85,10 +83,6 @@
 // //   }
 // // };
 
-
-
-
-
 // // exports.upsertProfile = async (req, res) => {
 // //   try {
 // //     const { name, category, socialLinks, images } = req.body;
@@ -127,8 +121,6 @@
 // //   }
 // // };
 
-
-
 // // // Get profile of logged-in user
 // // exports.getMyProfile = async (req, res) => {
 // //   try {
@@ -140,9 +132,6 @@
 // //     res.status(500).json({ error: err.message });
 // //   }
 // // };
-
-
-
 
 // // const InfluencerProfile = require("../models/InfluencerProfile");
 
@@ -203,8 +192,6 @@
 // //     res.status(500).json({ error: err.message });
 // //   }
 // // };
-
-
 
 // // const InfluencerProfile = require("../models/InfluencerProfile");
 
@@ -306,9 +293,6 @@
 // //   }
 // // };
 
-
-
-
 // // // const InfluencerProfile = require("../models/InfluencerProfile");
 
 // // // // Create or Update Influencer Profile
@@ -316,7 +300,6 @@
 // // //   try {
 // // //     const { name, category, bio, socialLinks, images, prices } = req.body;
 // // //     const userId = req.user._id;
-    
 
 // // //     let profile = await InfluencerProfile.findOne({ user: userId });
 
@@ -382,8 +365,6 @@
 // // //   }
 // // // };
 
-
-
 // // // exports.getAllInfluencers = async (req, res) => {
 // // //   try {
 // // //     const influencers = await InfluencerProfile.find().select(
@@ -409,8 +390,6 @@
 // // //     res.status(500).json({ message: err.message });
 // // //   }
 // // // };
-
-
 
 // // const InfluencerProfile = require("../models/InfluencerProfile");
 
@@ -492,9 +471,6 @@
 // //     res.status(500).json({ message: "Internal Server Error", error: err.message });
 // //   }
 // // };
-
-
-
 
 // const InfluencerProfile = require("../models/InfluencerProfile");
 // const path = require("path");
@@ -579,7 +555,6 @@
 // //   }
 // // };
 
-
 // // Create or Update Influencer Profile
 // // exports.upsertProfile = async (req, res) => {
 // //   try {
@@ -646,9 +621,6 @@
 // //     res.status(500).json({ message: "Internal Server Error", error: err.message });
 // //   }
 // // };
-
-
-
 
 // exports.upsertProfile = async (req, res) => {
 //   try {
@@ -738,9 +710,6 @@
 //   }
 // };
 
-
-
-
 // // ✅ Get logged-in influencer profile
 // exports.getMyProfile = async (req, res) => {
 //   try {
@@ -791,8 +760,6 @@
 //   }
 // };
 
-
-
 const User = require("../models/User");
 const InfluencerProfile = require("../models/InfluencerProfile");
 
@@ -820,7 +787,7 @@ exports.upsertProfile = async (req, res) => {
     if (req.files && req.files.length > 0) {
       const baseUrl = `${req.protocol}://${req.get("host")}`;
       uploadedImages = req.files.map(
-        (file) => `${baseUrl}/uploads/${file.filename}`
+        (file) => `${baseUrl}/uploads/${file.filename}`,
       );
     }
 
@@ -885,10 +852,6 @@ exports.upsertProfile = async (req, res) => {
   }
 };
 
-
-
-
-
 // ✅ Get logged-in influencer profile
 exports.getMyProfile = async (req, res) => {
   try {
@@ -896,13 +859,22 @@ exports.getMyProfile = async (req, res) => {
     const baseUrl = `${req.protocol}://${req.get("host")}`;
 
     const profile = await InfluencerProfile.findOne({ user: userId });
-    if (!profile)
-      return res.status(404).json({ message: "Profile not found" });
+    if (!profile) return res.status(404).json({ message: "Profile not found" });
 
     // ✅ Make sure images are returned as full URLs
-    const imagesWithUrl = (profile.images || []).map((img) =>
-      img.startsWith("http") ? img : `${baseUrl}${img}`
-    );
+    // const imagesWithUrl = (profile.images || []).map((img) =>
+    //   img.startsWith("http") ? img : `${baseUrl}${img}`
+    // );
+
+    const imagesWithUrl = (profile.images || []).map((img) => {
+      if (img.startsWith("http://")) {
+        return img.replace("http://", "https://");
+      }
+      if (img.startsWith("https://")) {
+        return img;
+      }
+      return `${baseUrl}${img}`;
+    });
 
     res.json({ ...profile._doc, images: imagesWithUrl });
   } catch (err) {
@@ -917,7 +889,7 @@ exports.getMyProfile = async (req, res) => {
 exports.getAllInfluencers = async (req, res) => {
   try {
     const influencers = await InfluencerProfile.find().select(
-      "name category images socialLinks prices bio"
+      "name category images socialLinks prices bio",
     );
     res.json(influencers);
   } catch (err) {
@@ -938,4 +910,3 @@ exports.getInfluencerById = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-

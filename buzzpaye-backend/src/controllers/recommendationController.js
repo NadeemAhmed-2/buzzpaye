@@ -5,11 +5,6 @@ exports.getRecommendations = async (req, res) => {
   try {
     const campaignId = req.params.id;
 
-    // // Call ML API
-    // const mlRes = await axios.get(
-    //   `http://127.0.0.1:5001/recommend/${campaignId}`
-    // );
-
     const mlRes = await axios.get(
       `${process.env.ML_SERVICE_URL}/recommend/${campaignId}`,
     );

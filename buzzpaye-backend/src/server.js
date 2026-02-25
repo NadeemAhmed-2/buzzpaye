@@ -178,6 +178,7 @@ app.get("/", (req, res) => {
   res.send("🚀 BuzzPaye Backend Running Successfully!");
 });
 
+app.set("trust proxy", 1);
 
 /* ✅ 404 HANDLER */
 app.use((req, res) => {
