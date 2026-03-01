@@ -234,7 +234,8 @@ export default function Register() {
     password: "",
     role: "",
   });
-const [error, setError] = useState("");
+  const [error, setError] = useState("");
+  const { register } = useAuth();
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -260,29 +261,46 @@ const [error, setError] = useState("");
 
   // };
 
- const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    const res = await api.post("/auth/register", form);
-    const { _id, name, email, role, token } = res.data;
+  //  const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const res = await api.post("/auth/register", form);
+  //     const { _id, name, email, role, token } = res.data;
 
-    const user = { _id, name, email, role, token };
+  //     const user = { _id, name, email, role, token };
 
-    // Save in localStorage
-    localStorage.setItem("user", JSON.stringify(user));
-    localStorage.setItem("token", token);
-    localStorage.setItem("userRole", role);
-    localStorage.setItem("userName", name);
+  //     // Save in localStorage
+  //     localStorage.setItem("user", JSON.stringify(user));
+  //     localStorage.setItem("token", token);
+  //     localStorage.setItem("userRole", role);
+  //     localStorage.setItem("userName", name);
 
-    // 🔥 IMPORTANT: Update AuthContext
-    setUser(user);
+  //     // 🔥 IMPORTANT: Update AuthContext
+  //     setUser(user);
 
-    navigate("/", { replace: true });
+  //     navigate("/", { replace: true });
 
-  } catch (err) {
-    setError(err.response?.data?.message || "Registration failed");
-  }
-};
+  //   } catch (err) {
+  //     setError(err.response?.data?.message || "Registration failed");
+  //   }
+  // };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const success = await register(
+      form.name,
+      form.email,
+      form.password,
+      form.role,
+    );
+
+    if (success) {
+      navigate("/", { replace: true });
+    } else {
+      setError("Registration failed");
+    }
+  };
 
   return (
     <div className="flex justify-center items-center h-[80vh] bg-grayCustom px-4 m-10">
