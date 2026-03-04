@@ -303,6 +303,32 @@ export default function Register() {
   // };
 
 
+// const handleSubmit = async (e) => {
+//   e.preventDefault();
+
+//   const success = await register(
+//     form.name,
+//     form.email,
+//     form.password,
+//     form.role
+//   );
+
+//   if (success) {
+//     if (form.role === "brand") {
+//       navigate("/brand-dashboard", { replace: true });
+//     } else if (form.role === "influencer") {
+//       navigate("/influencer-dashboard", { replace: true });
+//     } else {
+//       navigate("/", { replace: true });
+//     }
+
+//     window.location.reload(); // ensure navbar/auth context updates
+//   } else {
+//     setError("Registration failed");
+//   }
+// };
+
+
   const handleSubmit = async (e) => {
   e.preventDefault();
 
@@ -324,7 +350,7 @@ export default function Register() {
 
   return (
     <div className="flex justify-center items-center h-[80vh] bg-grayCustom px-4 m-10">
-      <div className="bg-secondary p-8 rounded-lg shadow-lg max-w-[100px] w-1/2 text-white glow-border">
+      <div className="bg-secondary p-8 rounded-lg shadow-lg max-w-md w-full text-white glow-border">
         <h2 className="text-2xl font-bold text-center mb-4 text-primary">
           Create an Account
         </h2>
