@@ -285,22 +285,42 @@ export default function Register() {
   //   }
   // };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   const success = await register(
+  //     form.name,
+  //     form.email,
+  //     form.password,
+  //     form.role,
+  //   );
+
+  //   if (success) {
+  //     navigate("/", { replace: true });
+  //   } else {
+  //     setError("Registration failed");
+  //   }
+  // };
+
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const success = await register(
-      form.name,
-      form.email,
-      form.password,
-      form.role,
-    );
+  const success = await register(
+    form.name,
+    form.email,
+    form.password,
+    form.role
+  );
 
-    if (success) {
-      navigate("/", { replace: true });
-    } else {
-      setError("Registration failed");
-    }
-  };
+  if (success) {
+    navigate("/", { replace: true });
+    window.location.reload(); // 🔥 force fetchUser like login
+  } else {
+    setError("Registration failed");
+  }
+};
+
 
   return (
     <div className="flex justify-center items-center h-[80vh] bg-grayCustom px-4 m-10">
